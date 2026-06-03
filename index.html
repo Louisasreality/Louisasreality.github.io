@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Louisa's Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root { --pink-50:#fff0f5; --pink-100:#ffe0ec; --pink-200:#ffb3cc; --pink-300:#ff85aa; --pink-400:#f472b6; --pink-500:#ec4899; --cream:#fff8fb; --text:#5c3348; --muted:#9d6e83; }
+      html,body { min-height:100%; font-family:'Quicksand',sans-serif; background-color:var(--cream); color:var(--text); }
+      nav { position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.85); backdrop-filter:blur(12px); border-bottom:1px solid var(--pink-100); display:flex; justify-content:center; gap:2.5rem; padding:1rem 1.5rem; }
+      nav a { font-family:'Quicksand',sans-serif; font-weight:500; font-size:0.95rem; color:var(--muted); text-decoration:none; position:relative; padding-bottom:4px; transition:color 0.2s; }
+      nav a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--pink-400); border-radius:2px; transition:width 0.25s ease; }
+      nav a:hover { color:var(--pink-500); } nav a:hover::after,nav a.active::after { width:100%; } nav a.active { color:var(--pink-500); }
+      .page { display:none; animation:fadeUp 0.5s ease both; } .page.active { display:block; }
+      @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+      #home { min-height:calc(100vh - 57px); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem 1rem; position:relative; overflow:hidden; }
+      .blob { position:absolute; border-radius:50%; filter:blur(60px); pointer-events:none; animation:pulse 5s ease-in-out infinite alternate; }
+      .blob-1 { width:280px; height:280px; background:#ffd6e7; top:10%; left:8%; opacity:0.55; }
+      .blob-2 { width:320px; height:320px; background:#ffb3cc; bottom:10%; right:8%; opacity:0.45; animation-delay:2s; }
+      @keyframes pulse { from{transform:scale(1)} to{transform:scale(1.12)} }
+      .bunny-wrap { position:relative; margin-bottom:2.5rem; animation:float 4s ease-in-out infinite; }
+      @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+      .bunny-aura { position:absolute; inset:-28px; border-radius:50%; background:radial-gradient(circle,rgba(244,114,182,0.40) 0%,rgba(255,182,193,0.22) 50%,transparent 72%); filter:blur(18px); animation:aura-pulse 3.5s ease-in-out infinite alternate; }
+      @keyframes aura-pulse { from{transform:scale(1);opacity:0.8} to{transform:scale(1.12);opacity:1} }
+      .bunny-img { width:260px; height:260px; object-fit:contain; position:relative; z-index:1; filter:drop-shadow(0 0 22px rgba(255,182,193,0.65)); }
+      .home-content { text-align:center; position:relative; z-index:1; }
+      .home-content h1 { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,6vw,3.8rem); font-weight:500; color:var(--text); margin-bottom:0.75rem; }
+      .home-content p { color:var(--muted); font-size:1.05rem; font-weight:300; max-width:380px; margin:0 auto 2rem; line-height:1.7; }
+      .btn-pill { display:inline-block; padding:0.7rem 2.2rem; border-radius:9999px; background:var(--pink-400); color:#fff; font-family:'Quicksand',sans-serif; font-weight:500; font-size:0.95rem; border:none; cursor:pointer; box-shadow:0 0 18px rgba(244,114,182,0.35); transition:background 0.2s,transform 0.15s; }
+      .btn-pill:hover { background:var(--pink-500); transform:translateY(-2px); }
+      .page-inner { max-width:680px; margin:0 auto; padding:4rem 1.5rem; }
+      .about-inner { max-width:780px; margin:0 auto; padding:4rem 1.5rem; }
+      .page-header { text-align:center; margin-bottom:3rem; }
+      .page-header h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:500; color:var(--text); margin-bottom:0.75rem; }
+      .page-header p { color:var(--muted); font-weight:300; margin-top:0.4rem; }
+      .divider { width:48px; height:4px; background:var(--pink-300); border-radius:4px; margin:0.8rem auto 0; }
+      .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
+      @media(max-width:600px) { .about-grid{grid-template-columns:1fr} nav{gap:1.2rem} }
+      .portrait-box { aspect-ratio:3/4; border-radius:1rem; border:8px solid #fff; box-shadow:0 8px 32px rgba(244,114,182,0.15); background:linear-gradient(135deg,var(--pink-100),#fff); display:flex; align-items:center; justify-content:center; }
+      .portrait-box span { font-family:'Playfair Display',serif; font-style:italic; color:var(--pink-300); font-size:1.1rem; }
+      .about-text { color:var(--muted); line-height:1.85; font-size:0.97rem; }
+      .about-text p+p { margin-top:1.1rem; } .highlight { font-weight:500; color:var(--text); }
+      .about-text h3 { font-family:'Playfair Display',serif; font-size:1.25rem; color:var(--text); margin:1.6rem 0 0.6rem; }
+      .about-text ul { list-style:disc; padding-left:1.4rem; } .about-text li { margin-bottom:0.3rem; }
+      .anime-list { display:flex; flex-direction:column; gap:1rem; margin-top:2rem; }
+      .anime-card { background:rgba(255,255,255,0.7); backdrop-filter:blur(8px); border-radius:1.2rem; border:1px solid var(--pink-100); overflow:hidden; transition:border-color 0.2s; }
+      .anime-card:hover { border-color:var(--pink-200); }
+      .anime-card-body { padding:1.1rem 1.2rem 0; display:flex; align-items:center; gap:1rem; }
+      .play-btn { width:46px; height:46px; border-radius:50%; border:none; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#f472b6,#ec4899); box-shadow:0 2px 12px rgba(244,114,182,0.4); transition:transform 0.15s,box-shadow 0.15s; }
+      .play-btn:hover { transform:scale(1.08); box-shadow:0 4px 16px rgba(244,114,182,0.5); }
+      .play-btn svg { display:block; }
+      .track-info { flex:1; min-width:0; }
+      .track-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--text); }
+      .track-artist { font-size:0.78rem; color:var(--muted); margin-top:1px; }
+      .track-tag { font-size:0.7rem; background:var(--pink-50); color:var(--pink-500); border:1px solid var(--pink-100); padding:0.15rem 0.6rem; border-radius:9999px; white-space:nowrap; flex-shrink:0; }
+      .progress-wrap { padding:0.6rem 1.2rem 0; }
+      .progress-bar { position:relative; height:4px; background:var(--pink-100); border-radius:9999px; cursor:pointer; }
+      .progress-fill { height:100%; background:linear-gradient(to right,var(--pink-300),var(--pink-500)); border-radius:9999px; transition:width 0.1s linear; position:relative; }
+      .progress-dot { position:absolute; right:-5px; top:50%; transform:translateY(-50%); width:10px; height:10px; background:var(--pink-500); border-radius:50%; opacity:0; transition:opacity 0.15s; }
+      .progress-bar:hover .progress-dot { opacity:1; }
+      .times { display:flex; justify-content:space-between; margin-top:3px; }
+      .times span { font-size:10px; color:var(--muted); }
+      .track-desc { font-size:0.78rem; color:var(--muted); line-height:1.6; font-style:italic; padding:0.6rem 1.2rem 1rem; border-top:1px solid var(--pink-50); margin-top:0.6rem; }
+      .moodboard { margin-top:1.5rem; padding:1.5rem 2rem; background:rgba(255,240,245,0.6); border-radius:1.2rem; border:1px solid var(--pink-100); text-align:center; }
+      .moodboard h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--text); margin-bottom:0.5rem; }
+      .moodboard p { color:var(--muted); font-size:0.85rem; max-width:380px; margin:0 auto; line-height:1.7; }
+      .contact-card { background:rgba(255,255,255,0.85); backdrop-filter:blur(10px); border-radius:1.2rem; border:1px solid var(--pink-100); padding:2.2rem; box-shadow:0 4px 20px rgba(244,114,182,0.08); margin-top:2rem; }
+      .form-group { margin-bottom:1.3rem; }
+      .form-group label { display:block; font-size:0.88rem; font-weight:500; color:var(--text); margin-bottom:0.4rem; }
+      .form-group input,.form-group textarea { width:100%; padding:0.65rem 0.9rem; border:1px solid var(--pink-200); border-radius:0.6rem; font-family:'Quicksand',sans-serif; font-size:0.93rem; color:var(--text); background:rgba(255,255,255,0.6); outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+      .form-group input:focus,.form-group textarea:focus { border-color:var(--pink-300); box-shadow:0 0 0 3px rgba(244,114,182,0.15); }
+      .form-group textarea { resize:none; height:120px; }
+      .btn-submit { width:100%; padding:0.75rem; border-radius:9999px; border:none; background:var(--pink-400); color:#fff; font-family:'Quicksand',sans-serif; font-weight:600; font-size:0.95rem; cursor:pointer; transition:background 0.2s,transform 0.15s; }
+      .btn-submit:hover { background:var(--pink-500); transform:translateY(-1px); }
+      .social-links { display:flex; justify-content:center; gap:2rem; margin-top:2.5rem; }
+      .social-links a { color:var(--muted); text-decoration:none; font-size:0.88rem; transition:color 0.2s; }
+      .social-links a:hover { color:var(--pink-500); }
+      .toast { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(80px); background:#fff; border:1px solid var(--pink-200); border-radius:0.8rem; padding:0.9rem 1.5rem; box-shadow:0 8px 28px rgba(244,114,182,0.2); text-align:center; font-size:0.9rem; color:var(--text); transition:transform 0.35s ease; z-index:999; }
+      .toast.show { transform:translateX(-50%) translateY(0); }
+      .toast strong { display:block; font-weight:600; margin-bottom:2px; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="#" class="active" data-page="home">Home</a>
+      <a href="#" data-page="about">About Me</a>
+      <a href="#" data-page="anime">Anime</a>
+      <a href="#" data-page="contact">Contact</a>
+    </nav>
+
+    <section id="home" class="page active">
+      <div class="blob blob-1"></div><div class="blob blob-2"></div>
+      <div class="bunny-wrap">
+        <div class="bunny-aura"></div>
+        <img class="bunny-img" src="bunny.png" alt="Sonny Angel Bunny" />
+      </div>
+      <div class="home-content">
+        <h1>a soft little world.</h1>
+        <p>Welcome to my digital diary. Stay a while, have some tea, and look around.</p>
+        <button class="btn-pill" onclick="goTo('about')">Enter Diary</button>
+      </div>
+    </section>
+
+    <section id="about" class="page">
+      <div class="about-inner">
+        <div class="page-header"><h1>About Me</h1><div class="divider"></div></div>
+        <div class="about-grid">
+          <div class="portrait-box"><span>self portrait</span></div>
+          <div class="about-text">
+            <p>Hi, I'm <span class="highlight">Louisa</span> &mdash; 16 years old and so glad you found your way here. This little corner of the internet is a collection of everything that makes my heart feel full.</p>
+            <p>I was born on <span class="highlight">November 23rd</span>, which I think perfectly explains why I love cozy things &mdash; blankets, warm drinks, and soft afternoons.</p>
+            <p>Speaking of warm drinks, I am absolutely obsessed with matcha. Yes, I know &mdash; not everyone gets it. People always have opinions about it, but honestly? It's earthy, it's calming, and I will never stop. The matcha girlies understand.</p>
+            <p>My aesthetic lives somewhere between a sunny spring morning and a bedroom lit only by fairy lights. I collect Sonny Angels, press flowers, and tie ribbons on anything that will let me.</p>
+            <h3>Current loves:</h3>
+            <ul>
+              <li>Matcha (judge me, I dare you)</li>
+              <li>Sonny Angel figurines</li>
+              <li>Pressed flowers</li>
+              <li>Overcast November afternoons</li>
+              <li>Ribbons tied on everything</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="anime" class="page">
+      <div class="page-inner">
+        <div class="page-header"><h1>My Favorite Anime</h1><p>The shows that live in my heart permanently.</p><div class="divider"></div></div>
+        <div class="anime-list">
+          <div class="anime-card" data-src="audio/vinland-saga-op.mp3">
+            <div class="anime-card-body">
+              <button class="play-btn" onclick="togglePlay(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="4,2 14,8 4,14"/></svg></button>
+              <div class="track-info"><div class="track-title">MUKANJYO</div><div class="track-artist">Survive Said The Prophet &mdash; Vinland Saga OP</div></div>
+              <span class="track-tag">revenge &amp; redemption</span>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-bar" onclick="seekTo(event,this)"><div class="progress-fill" style="width:0%"><div class="progress-dot"></div></div></div>
+              <div class="times"><span class="cur-time">0:00</span><span class="dur-time">0:00</span></div>
+            </div>
+            <div class="track-desc">A story about war, loss, and what it truly means to be strong. Thorfinn lives rent-free in my head.</div>
+          </div>
+          <div class="anime-card" data-src="audio/bleach-op.mp3">
+            <div class="anime-card-body">
+              <button class="play-btn" onclick="togglePlay(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="4,2 14,8 4,14"/></svg></button>
+              <div class="track-info"><div class="track-title">Asterisk</div><div class="track-artist">Orange Range &mdash; Bleach OP</div></div>
+              <span class="track-tag">soul reapers &amp; chaos</span>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-bar" onclick="seekTo(event,this)"><div class="progress-fill" style="width:0%"><div class="progress-dot"></div></div></div>
+              <div class="times"><span class="cur-time">0:00</span><span class="dur-time">0:00</span></div>
+            </div>
+            <div class="track-desc">The vibes, the fights, the characters &mdash; Bleach is iconic and I will not hear otherwise. Ichigo era forever.</div>
+          </div>
+          <div class="anime-card" data-src="audio/nana-op.mp3">
+            <div class="anime-card-body">
+              <button class="play-btn" onclick="togglePlay(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="4,2 14,8 4,14"/></svg></button>
+              <div class="track-info"><div class="track-title">A Little Pain</div><div class="track-artist">Olivia Lufkin &mdash; Nana OP</div></div>
+              <span class="track-tag">love &amp; heartbreak</span>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-bar" onclick="seekTo(event,this)"><div class="progress-fill" style="width:0%"><div class="progress-dot"></div></div></div>
+              <div class="times"><span class="cur-time">0:00</span><span class="dur-time">0:00</span></div>
+            </div>
+            <div class="track-desc">The most real, gut-wrenching anime about friendship and growing up. Nana Osaki is everything.</div>
+          </div>
+        </div>
+        <div class="moodboard"><h2>Why Anime?</h2><p>Anime tells stories no other medium quite can &mdash; raw emotion, stunning art, and characters who feel like old friends.</p></div>
+      </div>
+    </section>
+
+    <section id="contact" class="page">
+      <div class="page-inner" style="max-width:520px">
+        <div class="page-header"><h1>Say Hello</h1><p>Leave a little note if you'd like.</p><div class="divider"></div></div>
+        <div class="contact-card">
+          <form id="contact-form">
+            <div class="form-group"><label for="c-name">Name</label><input type="text" id="c-name" placeholder="Your name" required /></div>
+            <div class="form-group"><label for="c-email">Email</label><input type="email" id="c-email" placeholder="Your email" required /></div>
+            <div class="form-group"><label for="c-msg">Message</label><textarea id="c-msg" placeholder="Write your message here..." required></textarea></div>
+            <button type="submit" class="btn-submit" id="submit-btn">Send Message</button>
+          </form>
+        </div>
+        <div class="social-links"><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">Tumblr</a></div>
+      </div>
+    </section>
+
+    <div class="toast" id="toast"><strong>Message sent!</strong> Thank you for reaching out. I'll read it soon.</div>
+
+    <script>
+      const pages=document.querySelectorAll('.page'),navLinks=document.querySelectorAll('nav a');
+      function goTo(id){pages.forEach(p=>p.classList.remove('active'));navLinks.forEach(a=>a.classList.remove('active'));const t=document.getElementById(id);if(t){t.classList.add('active');t.style.animation='none';t.offsetHeight;t.style.animation='';}const l=document.querySelector('nav a[data-page="'+id+'"]');if(l)l.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+      navLinks.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goTo(a.dataset.page);}));
+      let curAudio=null,curCard=null,rafId=null;
+      const PLAY='<polygon points="4,2 14,8 4,14"/>',PAUSE='<rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/>';
+      function fmt(s){if(!isFinite(s))return'0:00';return Math.floor(s/60)+':'+(Math.floor(s%60)+'').padStart(2,'0');}
+      function tick(card,audio){const f=card.querySelector('.progress-fill'),c=card.querySelector('.cur-time');if(audio.duration){f.style.width=(audio.currentTime/audio.duration*100)+'%';c.textContent=fmt(audio.currentTime);}if(!audio.paused)rafId=requestAnimationFrame(()=>tick(card,audio));}
+      function resetCard(card){card.querySelector('.play-btn svg').innerHTML=PLAY;card.querySelector('.progress-fill').style.width='0%';card.querySelector('.cur-time').textContent='0:00';}
+      function togglePlay(btn){const card=btn.closest('.anime-card');if(curCard===card&&curAudio){if(curAudio.paused){curAudio.play();btn.querySelector('svg').innerHTML=PAUSE;rafId=requestAnimationFrame(()=>tick(card,curAudio));}else{curAudio.pause();cancelAnimationFrame(rafId);btn.querySelector('svg').innerHTML=PLAY;}return;}if(curAudio){curAudio.pause();cancelAnimationFrame(rafId);resetCard(curCard);curAudio=null;}const a=new Audio(card.dataset.src);curAudio=a;curCard=card;a.play().catch(()=>{});btn.querySelector('svg').innerHTML=PAUSE;a.addEventListener('loadedmetadata',()=>{card.querySelector('.dur-time').textContent=fmt(a.duration);});a.addEventListener('ended',()=>{cancelAnimationFrame(rafId);resetCard(card);curAudio=null;curCard=null;});rafId=requestAnimationFrame(()=>tick(card,a));}
+      function seekTo(e,bar){if(!curAudio||curCard!==bar.closest('.anime-card'))return;const r=bar.getBoundingClientRect();curAudio.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*curAudio.duration;}
+      document.getElementById('contact-form').addEventListener('submit',e=>{e.preventDefault();const btn=document.getElementById('submit-btn');btn.textContent='Sending...';btn.disabled=true;setTimeout(()=>{btn.textContent='Send Message';btn.disabled=false;e.target.reset();const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);},1000);});
+    </script>
+  </body>
+  </html>
